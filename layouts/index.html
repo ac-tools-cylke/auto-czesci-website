@@ -35,6 +35,7 @@
     </div>
 
     <!-- Quick Contact Panel -->
+    {{ if $p.showContactPanel }}
     <div id="contact-panel">
       <div class="panel-header">
         <p class="panel-label">{{ i18n "quick_contact" }}</p>
@@ -77,6 +78,7 @@
         </div>
       </div>
     </div>
+    {{ end }}
 
     <div class="hero-bottom-fade"></div>
   </header>

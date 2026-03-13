@@ -22,8 +22,9 @@ defaultContentLanguageInSubdir = false
   phone       = "+1 (555) 123-4567"
   email       = "info@gridlockauto.com"
   address     = "742 Motor Ave, Detroit MI"
-  hours       = "Mon–Sat 8AM–6PM"
-  themeMode   = "light"
+  hours            = "Mon–Sat 8AM–6PM"
+  themeMode        = "light"
+  showContactPanel = false
 
   [params.colors]
     background     = "#ffffff"

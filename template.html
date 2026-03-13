@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Parts Shop</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&amp;family=DM+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; }
+    .font-heading { font-family: 'Outfit', sans-serif; }
+    .font-body { font-family: 'DM Sans', sans-serif; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .anim-fade-up {
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    .anim-delay-1 { animation-delay: 0.1s; }
+    .anim-delay-2 { animation-delay: 0.2s; }
+    .anim-delay-3 { animation-delay: 0.3s; }
+    .anim-delay-4 { animation-delay: 0.4s; }
+    .anim-delay-5 { animation-delay: 0.5s; }
+    .anim-delay-6 { animation-delay: 0.6s; }
+
+    .part-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .part-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .hero-pattern {
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.05) 0%, transparent 40%),
+        linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+    }
+    
+    .hero-pattern.light-mode {
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.02) 0%, transparent 40%),
+        linear-gradient(135deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
+    }
+
+    .cta-btn {
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .grid-bg.light-mode {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .contact-card {
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s ease;
+    }
+    .contact-card:hover { transform: translateY(-2px); }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <div id="app-wrapper" class="w-full h-full overflow-auto" style="background: #ffffff;">
+   <!-- Contact Overlay Panel -->
+   <div id="contact-panel" class="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4 p-5 rounded-2xl rounded-r-none shadow-2xl backdrop-blur-md" style="background: rgba(249,250,251,0.95); border: 1px solid rgba(0,0,0,0.08); border-right: none; width: 320px; max-height: 90vh; overflow-y-auto;">
+    <div class="text-center border-b border-gray-700 pb-4">
+     <p class="font-heading font-bold text-sm mb-1" style="color: #6b7280;">QUICK CONTACT</p>
+     <p class="font-heading font-bold text-lg" id="panel-shop-name" style="color: #1f2937;">GridLock Auto Parts</p>
+    </div>
+    <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-800 transition-colors cursor-pointer group">
+     <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.15);">
+      <i data-lucide="phone" style="width:18px;height:18px;color:#f87171;"></i>
+     </div>
+     <div class="flex-1 min-w-0">
+      <p class="text-xs" style="color: #6b7280;">Phone</p>
+      <p id="panel-phone" class="font-heading font-semibold text-sm truncate" style="color: #1f2937;">+1 (555) 123-4567</p>
+     </div><i data-lucide="copy" style="width:16px;height:16px;color:#737373;" class="flex-shrink-0 group-hover:text-white transition-colors"></i>
+    </div>
+    <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-800 transition-colors cursor-pointer group">
+     <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.15);">
+      <i data-lucide="mail" style="width:18px;height:18px;color:#f87171;"></i>
+     </div>
+     <div class="flex-1 min-w-0">
+      <p class="text-xs" style="color: #6b7280;">Email</p>
+      <p id="panel-email" class="font-heading font-semibold text-sm truncate" style="color: #1f2937;">info@gridlockauto.com</p>
+     </div><i data-lucide="copy" style="width:16px;height:16px;color:#737373;" class="flex-shrink-0 group-hover:text-white transition-colors"></i>
+    </div>
+    <div class="flex items-start gap-3 p-4 rounded-xl hover:bg-gray-800 transition-colors">
+     <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: rgba(220,38,38,0.15);">
+      <i data-lucide="map-pin" style="width:18px;height:18px;color:#f87171;"></i>
+     </div>
+     <div class="flex-1 min-w-0">
+      <p class="text-xs" style="color: #6b7280;">Address</p>
+      <p id="panel-address" class="font-heading font-semibold text-sm" style="color: #1f2937; line-height: 1.3;">742 Motor Ave, Detroit MI</p>
+     </div>
+    </div>
+    <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-800 transition-colors">
+     <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.15);">
+      <i data-lucide="clock" style="width:18px;height:18px;color:#f87171;"></i>
+     </div>
+     <div class="flex-1 min-w-0">
+      <p class="text-xs" style="color: #6b7280;">Hours</p>
+      <p id="panel-hours" class="font-heading font-semibold text-sm" style="color: #1f2937;">Mon–Sat 8AM–6PM</p>
+     </div>
+    </div><button class="w-full mt-2 px-4 py-2.5 rounded-lg font-heading font-semibold text-sm text-white transition-all hover:scale-105" style="background: #dc2626;"> <i data-lucide="message-circle" style="width:14px;height:14px;vertical-align:text-bottom;margin-right:6px;"></i> Message Us </button>
+   </div><!-- Hero Section -->
+   <header class="hero-pattern light-mode grid-bg light-mode w-full relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 py-16 md:py-24 relative z-10">
+     <nav class="flex items-center justify-between mb-16 anim-fade-up">
+      <div class="flex items-center gap-3">
+       <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: #dc2626;">
+        <i data-lucide="wrench" style="width:22px;height:22px;color:#fff;"></i>
+       </div><span id="nav-shop-name" class="font-heading font-bold text-xl" style="color: #1f2937;">GridLock Auto Parts</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium" style="color: #6b7280;">
+       <a href="#parts" class="hover:text-gray-900 transition-colors">Parts</a> <a href="#contact" class="hover:text-gray-900 transition-colors">Contact</a>
+      </div>
+     </nav>
+     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium mb-6 anim-fade-up anim-delay-1" style="background: rgba(220,38,38,0.15); color: #dc2626; border: 1px solid rgba(220,38,38,0.25);">
+      <i data-lucide="zap" style="width:12px;height:12px;"></i> Premium Quality Parts
+     </div>
+     <h1 id="hero-title" class="font-heading font-900 text-4xl md:text-6xl leading-tight mb-4 anim-fade-up anim-delay-2" style="color: #1f2937;">GridLock Auto Parts</h1>
+     <p id="hero-tagline" class="text-lg md:text-xl mb-8 anim-fade-up anim-delay-3" style="color: #6b7280;">Quality parts. Fair prices. Every make and model.</p><a href="#parts" class="cta-btn inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-heading font-semibold text-white anim-fade-up anim-delay-4" style="background: #dc2626;"> <i data-lucide="shopping-cart" style="width:18px;height:18px;"></i> Browse Parts </a>
+    </div>
+   </header>
+  </div><!-- Decorative bottom fade -->
+  <div class="absolute bottom-0 left-0 w-full h-24" style="background: linear-gradient(to top, #ffffff, transparent);"></div><!-- Parts Section -->
+  <main id="parts" class="w-full" style="background: #ffffff;">
+   <div class="max-w-6xl mx-auto px-6 py-16">
+    <div class="text-center mb-12 anim-fade-up">
+     <h2 class="font-heading font-800 text-3xl md:text-4xl mb-2" style="color: #1f2937;">Featured Parts</h2>
+     <p class="text-base" style="color: #6b7280;">Top-selling components in stock now</p>
+    </div>
+    <div id="parts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+     <!-- Part cards rendered by JS -->
+    </div>
+   </div>
+  </main><!-- Contact Section -->
+  <section id="contact" class="w-full" style="background: #f9fafb;">
+   <div class="max-w-6xl mx-auto px-6 py-16">
+    <div class="text-center mb-12">
+     <h2 class="font-heading font-800 text-3xl md:text-4xl mb-2" style="color: #1f2937;">Get In Touch</h2>
+     <p class="text-base" style="color: #6b7280;">We're here to help you find the right part</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+     <div class="contact-card rounded-2xl p-6 text-center" style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06);">
+      <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background: rgba(220,38,38,0.08);">
+       <i data-lucide="phone" style="width:22px;height:22px;color:#dc2626;"></i>
+      </div>
+      <p class="font-heading font-semibold text-sm mb-1" style="color: #6b7280;">Phone</p>
+      <p id="contact-phone" class="font-heading font-bold text-base" style="color: #1f2937;">+1 (555) 123-4567</p>
+     </div>
+     <div class="contact-card rounded-2xl p-6 text-center" style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06);">
+      <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background: rgba(220,38,38,0.08);">
+       <i data-lucide="mail" style="width:22px;height:22px;color:#dc2626;"></i>
+      </div>
+      <p class="font-heading font-semibold text-sm mb-1" style="color: #6b7280;">Email</p>
+      <p id="contact-email" class="font-heading font-bold text-base" style="color: #1f2937;">info@gridlockauto.com</p>
+     </div>
+     <div class="contact-card rounded-2xl p-6 text-center" style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06);">
+      <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background: rgba(220,38,38,0.08);">
+       <i data-lucide="map-pin" style="width:22px;height:22px;color:#dc2626;"></i>
+      </div>
+      <p class="font-heading font-semibold text-sm mb-1" style="color: #6b7280;">Address</p>
+      <p id="contact-address" class="font-heading font-bold text-base" style="color: #1f2937;">742 Motor Ave, Detroit MI</p>
+     </div>
+     <div class="contact-card rounded-2xl p-6 text-center" style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06);">
+      <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background: rgba(220,38,38,0.08);">
+       <i data-lucide="clock" style="width:22px;height:22px;color:#dc2626;"></i>
+      </div>
+      <p class="font-heading font-semibold text-sm mb-1" style="color: #6b7280;">Hours</p>
+      <p id="contact-hours" class="font-heading font-bold text-base" style="color: #1f2937;">Mon–Sat 8AM–6PM</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Footer -->
+  <footer class="w-full py-8 text-center" style="background: #f3f4f6; border-top: 1px solid rgba(0,0,0,0.08);">
+   <p class="text-sm" style="color: #6b7280;"><span id="footer-name">GridLock Auto Parts</span> · Built with care for car enthusiasts</p>
+  </footer>
+  <script>
+    // Part icons as inline SVGs for each card
+    const partIcons = [
+      'disc',       // brake pads
+      'droplets',   // oil filter
+      'zap',        // spark plugs
+      'wind',       // air filter
+      'sun',        // headlight
+      'cloud-rain'  // wiper
+    ];
+
+    const partDescriptions = [
+      'Premium ceramic pads for reliable stopping power',
+      'High-flow filtration for peak engine performance',
+      'Iridium-tipped for consistent ignition',
+      'Washable high-performance air filtration',
+      'Bright halogen replacement for clear visibility',
+      'All-season silicone for streak-free wiping'
+    ];
+
+    const defaultConfig = {
+      shop_name: 'GridLock Auto Parts',
+      shop_tagline: 'Quality parts. Fair prices. Every make and model.',
+      contact_phone: '+1 (555) 123-4567',
+      contact_email: 'info@gridlockauto.com',
+      contact_address: '742 Motor Ave, Detroit MI',
+      contact_hours: 'Mon–Sat 8AM–6PM',
+      part1_name: 'Brake Pads', part1_price: '$49.99',
+      part2_name: 'Oil Filter', part2_price: '$12.99',
+      part3_name: 'Spark Plugs', part3_price: '$8.99',
+      part4_name: 'Air Filter', part4_price: '$22.99',
+      part5_name: 'Headlight Bulb', part5_price: '$15.99',
+      part6_name: 'Wiper Blades', part6_price: '$18.99',
+      background_color: '#ffffff',
+      surface_color: '#f9fafb',
+      text_color: '#1f2937',
+      primary_action_color: '#dc2626',
+      secondary_text_color: '#6b7280',
+      font_family: 'Outfit',
+      font_size: 16,
+      theme_mode: 'light'
+    };
+
+    // Build the parts grid once
+    function buildPartsGrid() {
+      const grid = document.getElementById('parts-grid');
+      grid.innerHTML = '';
+      for (let i = 1; i <= 6; i++) {
+        const card = document.createElement('div');
+        card.className = 'part-card rounded-2xl p-6 anim-fade-up anim-delay-' + i;
+        card.id = 'part-card-' + i;
+        card.style.background = '#ffffff';
+        card.style.border = '1px solid rgba(0,0,0,0.06)';
+        card.innerHTML = `
+          <div class="flex items-start justify-between mb-5">
+            <div class="w-14 h-14 rounded-xl flex items-center justify-center" id="part-icon-bg-${i}" style="background: rgba(220,38,38,0.1);">
+              <i data-lucide="${partIcons[i-1]}" style="width:28px;height:28px;color:#dc2626;" id="part-icon-${i}"></i>
+            </div>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold font-heading" id="part-badge-${i}" style="background: rgba(220,38,38,0.10); color: #dc2626;">In Stock</span>
+          </div>
+          <h3 class="font-heading font-bold text-lg mb-1" id="part-name-${i}" style="color: #1f2937;"></h3>
+          <p class="text-sm mb-4" id="part-desc-${i}" style="color: #6b7280;">${partDescriptions[i-1]}</p>
+          <div class="flex items-center justify-between">
+            <span class="font-heading font-800 text-2xl" id="part-price-${i}" style="color: #dc2626;"></span>
+            <button class="cta-btn flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold text-white" id="part-btn-${i}" style="background: #dc2626;" onclick="addToCart(${i})">
+              <i data-lucide="shopping-cart" style="width:14px;height:14px;"></i>
+              Add
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      }
+      lucide.createIcons();
+    }
+
+    // Toast notification for add to cart
+    function addToCart(partIndex) {
+      const existing = document.getElementById('toast-msg');
+      if (existing) existing.remove();
+
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      const name = config['part' + partIndex + '_name'] || defaultConfig['part' + partIndex + '_name'];
+
+      const toast = document.createElement('div');
+      toast.id = 'toast-msg';
+      toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-5 py-3 rounded-full font-heading font-semibold text-sm text-white shadow-xl';
+      toast.style.background = '#dc2626';
+      toast.style.animation = 'fadeUp 0.3s ease-out';
+      toast.innerHTML = `<i data-lucide="check" style="width:16px;height:16px;"></i> ${name} added to cart`;
+      document.body.appendChild(toast);
+      lucide.createIcons();
+      setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; }, 2000);
+      setTimeout(() => toast.remove(), 2400);
+    }
+
+    buildPartsGrid();
+
+    // Apply config to UI
+    function applyConfig(config) {
+      const c = key => config[key] || defaultConfig[key];
+      const font = c('font_family');
+      const baseSize = c('font_size');
+      const baseFontStack = `${font}, 'DM Sans', sans-serif`;
+
+      // Shop name and tagline
+      document.getElementById('nav-shop-name').textContent = c('shop_name');
+      document.getElementById('hero-title').textContent = c('shop_name');
+      document.getElementById('footer-name').textContent = c('shop_name');
+      document.getElementById('panel-shop-name').textContent = c('shop_name');
+      document.getElementById('hero-tagline').textContent = c('shop_tagline');
+
+      // Contact
+      document.getElementById('contact-phone').textContent = c('contact_phone');
+      document.getElementById('contact-email').textContent = c('contact_email');
+      document.getElementById('contact-address').textContent = c('contact_address');
+      document.getElementById('contact-hours').textContent = c('contact_hours');
+      
+      // Panel contact
+      document.getElementById('panel-phone').textContent = c('contact_phone');
+      document.getElementById('panel-email').textContent = c('contact_email');
+      document.getElementById('panel-address').textContent = c('contact_address');
+      document.getElementById('panel-hours').textContent = c('contact_hours');
+
+      // Parts
+      for (let i = 1; i <= 6; i++) {
+        const nameEl = document.getElementById('part-name-' + i);
+        const priceEl = document.getElementById('part-price-' + i);
+        if (nameEl) nameEl.textContent = c('part' + i + '_name');
+        if (priceEl) priceEl.textContent = c('part' + i + '_price');
+      }
+
+      // Colors
+      const bg = c('background_color');
+      const surface = c('surface_color');
+      const text = c('text_color');
+      const primary = c('primary_action_color');
+      const secondary = c('secondary_text_color');
+
+      document.getElementById('app-wrapper').style.background = bg;
+      document.getElementById('hero-title').style.color = text;
+      document.getElementById('nav-shop-name').style.color = text;
+      document.getElementById('hero-tagline').style.color = secondary;
+      document.getElementById('contact-phone').style.color = text;
+      document.getElementById('contact-email').style.color = text;
+      document.getElementById('contact-address').style.color = text;
+      document.getElementById('contact-hours').style.color = text;
+      
+      // Panel colors
+      document.getElementById('panel-shop-name').style.color = text;
+      document.getElementById('panel-phone').style.color = text;
+      document.getElementById('panel-email').style.color = text;
+      document.getElementById('panel-address').style.color = text;
+      document.getElementById('panel-hours').style.color = text;
+
+      // Part card text colors
+      for (let i = 1; i <= 6; i++) {
+        const nameEl = document.getElementById('part-name-' + i);
+        const priceEl = document.getElementById('part-price-' + i);
+        const btn = document.getElementById('part-btn-' + i);
+        if (nameEl) nameEl.style.color = text;
+        if (priceEl) priceEl.style.color = primary;
+        if (btn) btn.style.background = primary;
+      }
+
+      // Font
+      document.querySelectorAll('.font-heading, [class*="font-heading"]').forEach(el => {
+        el.style.fontFamily = baseFontStack;
+      });
+      document.getElementById('hero-title').style.fontSize = `${baseSize * 3}px`;
+      document.getElementById('hero-tagline').style.fontSize = `${baseSize * 1.2}px`;
+      
+      // Apply theme mode to hero and parts sections
+      const theme = c('theme_mode');
+      const header = document.querySelector('header');
+      const partsSection = document.getElementById('parts');
+      const contactSection = document.getElementById('contact');
+      const footerSection = document.querySelector('footer');
+      const contactPanel = document.getElementById('contact-panel');
+      
+      if (theme === 'light') {
+        header.classList.add('light-mode');
+        document.querySelector('.grid-bg').classList.add('light-mode');
+        partsSection.style.background = bg;
+        contactSection.style.background = surface;
+        footerSection.style.background = '#f3f4f6';
+        footerSection.style.borderTop = '1px solid rgba(0,0,0,0.08)';
+        contactPanel.style.background = 'rgba(249,250,251,0.95)';
+        contactPanel.style.borderColor = 'rgba(0,0,0,0.08)';
+      } else {
+        header.classList.remove('light-mode');
+        document.querySelector('.grid-bg').classList.remove('light-mode');
+        partsSection.style.background = bg;
+        contactSection.style.background = '#141414';
+        footerSection.style.background = '#0a0a0a';
+        footerSection.style.borderTop = '1px solid rgba(255,255,255,0.05)';
+        contactPanel.style.background = 'rgba(31,31,31,0.95)';
+        contactPanel.style.borderColor = 'rgba(255,255,255,0.1)';
+      }
+    }
+
+    // Element SDK Init
+    function makeRecolorable(key) {
+      return {
+        get: () => (window.elementSdk ? window.elementSdk.config[key] : null) || defaultConfig[key],
+        set: (v) => {
+          if (window.elementSdk) {
+            window.elementSdk.config[key] = v;
+            window.elementSdk.setConfig({ [key]: v });
+          }
+        }
+      };
+    }
+
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (config) => {
+        applyConfig(config);
+      },
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          makeRecolorable('background_color'),
+          makeRecolorable('surface_color'),
+          makeRecolorable('text_color'),
+          makeRecolorable('primary_action_color'),
+          makeRecolorable('secondary_text_color')
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+        }
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['shop_name', config.shop_name || defaultConfig.shop_name],
+        ['shop_tagline', config.shop_tagline || defaultConfig.shop_tagline],
+        ['contact_phone', config.contact_phone || defaultConfig.contact_phone],
+        ['contact_email', config.contact_email || defaultConfig.contact_email],
+        ['contact_address', config.contact_address || defaultConfig.contact_address],
+        ['contact_hours', config.contact_hours || defaultConfig.contact_hours],
+        ['part1_name', config.part1_name || defaultConfig.part1_name],
+        ['part1_price', config.part1_price || defaultConfig.part1_price],
+        ['part2_name', config.part2_name || defaultConfig.part2_name],
+        ['part2_price', config.part2_price || defaultConfig.part2_price],
+        ['part3_name', config.part3_name || defaultConfig.part3_name],
+        ['part3_price', config.part3_price || defaultConfig.part3_price],
+        ['part4_name', config.part4_name || defaultConfig.part4_name],
+        ['part4_price', config.part4_price || defaultConfig.part4_price],
+        ['part5_name', config.part5_name || defaultConfig.part5_name],
+        ['part5_price', config.part5_price || defaultConfig.part5_price],
+        ['part6_name', config.part6_name || defaultConfig.part6_name],
+        ['part6_price', config.part6_price || defaultConfig.part6_price]
+      ])
+    });
+
+    lucide.createIcons();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dba399015443528',t:'MTc3MzM5NjM3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

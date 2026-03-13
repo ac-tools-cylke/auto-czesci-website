@@ -1,10 +1,24 @@
 baseURL = "https://example.com/"
-languageCode = "pl"
 title = "Auto Części"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+
+[languages]
+  [languages.en]
+    languageCode = "en"
+    languageName = "English"
+    weight = 1
+    [languages.en.params]
+      shopTagline = "Quality parts. Fair prices. Every make and model."
+  [languages.pl]
+    languageCode = "pl"
+    languageName = "Polski"
+    weight = 2
+    [languages.pl.params]
+      shopTagline = "Jakość części. Uczciwe ceny. Każda marka i model."
 
 [params]
   shopName    = "GridLock Auto Parts"
-  shopTagline = "Quality parts. Fair prices. Every make and model."
   phone       = "+1 (555) 123-4567"
   email       = "info@gridlockauto.com"
   address     = "742 Motor Ave, Detroit MI"

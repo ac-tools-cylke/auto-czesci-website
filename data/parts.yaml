@@ -1,35 +1,47 @@
 - id: 1
   name: Brake Pads
+  name_pl: Klocki Hamulcowe
   price: "$49.99"
   icon: disc
   description: Premium ceramic pads for reliable stopping power
+  description_pl: Ceramiczne klocki premium zapewniające niezawodne hamowanie
 
 - id: 2
   name: Oil Filter
+  name_pl: Filtr Oleju
   price: "$12.99"
   icon: droplets
   description: High-flow filtration for peak engine performance
+  description_pl: Wysokoprzepustowa filtracja dla optymalnej wydajności silnika
 
 - id: 3
   name: Spark Plugs
+  name_pl: Świece Zapłonowe
   price: "$8.99"
   icon: zap
   description: Iridium-tipped for consistent ignition
+  description_pl: Z końcówką irydową dla pewnego zapłonu
 
 - id: 4
   name: Air Filter
+  name_pl: Filtr Powietrza
   price: "$22.99"
   icon: wind
   description: Washable high-performance air filtration
+  description_pl: Zmywalna, wysokowydajna filtracja powietrza
 
 - id: 5
   name: Headlight Bulb
+  name_pl: Żarówka Reflektora
   price: "$15.99"
   icon: sun
   description: Bright halogen replacement for clear visibility
+  description_pl: Jasna żarówka halogenowa dla dobrej widoczności
 
 - id: 6
   name: Wiper Blades
+  name_pl: Wycieraczki
   price: "$18.99"
   icon: cloud-rain
   description: All-season silicone for streak-free wiping
+  description_pl: Silikonowe na każdą porę roku, wycierają bez smug

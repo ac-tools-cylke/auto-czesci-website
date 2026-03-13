@@ -1,5 +1,6 @@
 {{ define "main" }}
 {{ $p := .Site.Params }}
+{{ $lang := .Site.Language.Lang }}
 <div id="app-wrapper" style="background: {{ $p.colors.background }};">
   <!-- Hero / Header -->
   <header class="hero-section hero-pattern{{ if eq $p.themeMode "light" }} light-mode{{ end }} grid-bg{{ if eq $p.themeMode "light" }} light-mode{{ end }}">
@@ -11,26 +12,32 @@
           </div>
           <span class="nav-shop-name">{{ $p.shopName }}</span>
         </div>
-        <div class="nav-links">
-          <a href="#parts">Parts</a>
-          <a href="#contact">Contact</a>
+        <div class="nav-right">
+          <div class="nav-links">
+            <a href="#parts">{{ i18n "nav_parts" }}</a>
+            <a href="#contact">{{ i18n "nav_contact" }}</a>
+          </div>
+          <div class="lang-switcher">
+            <a href="/" class="lang-btn{{ if eq $lang "en" }} lang-active{{ end }}">EN</a>
+            <a href="/pl/" class="lang-btn{{ if eq $lang "pl" }} lang-active{{ end }}">PL</a>
+          </div>
         </div>
       </nav>
 
       <div class="quality-badge anim-fade-up anim-delay-1">
-        <i data-lucide="zap" style="width:12px;height:12px;"></i> Premium Quality Parts
+        <i data-lucide="zap" style="width:12px;height:12px;"></i> {{ i18n "quality_badge" }}
       </div>
       <h1 class="hero-title anim-fade-up anim-delay-2">{{ $p.shopName }}</h1>
       <p class="hero-tagline anim-fade-up anim-delay-3">{{ $p.shopTagline }}</p>
       <a href="#parts" class="cta-btn anim-fade-up anim-delay-4">
-        <i data-lucide="shopping-cart" style="width:18px;height:18px;"></i> Browse Parts
+        <i data-lucide="shopping-cart" style="width:18px;height:18px;"></i> {{ i18n "browse_parts" }}
       </a>
     </div>
 
     <!-- Quick Contact Panel -->
     <div id="contact-panel">
       <div class="panel-header">
-        <p class="panel-label">QUICK CONTACT</p>
+        <p class="panel-label">{{ i18n "quick_contact" }}</p>
         <p class="panel-shop-name">{{ $p.shopName }}</p>
       </div>
       <div class="panel-item">
@@ -38,7 +45,7 @@
           <i data-lucide="phone" style="width:18px;height:18px;color:{{ $p.colors.primaryAction }};"></i>
         </div>
         <div class="panel-info">
-          <p class="panel-info-label">Phone</p>
+          <p class="panel-info-label">{{ i18n "phone" }}</p>
           <p class="panel-info-value">{{ $p.phone }}</p>
         </div>
       </div>
@@ -47,7 +54,7 @@
           <i data-lucide="mail" style="width:18px;height:18px;color:{{ $p.colors.primaryAction }};"></i>
         </div>
         <div class="panel-info">
-          <p class="panel-info-label">Email</p>
+          <p class="panel-info-label">{{ i18n "email" }}</p>
           <p class="panel-info-value">{{ $p.email }}</p>
         </div>
       </div>
@@ -56,7 +63,7 @@
           <i data-lucide="map-pin" style="width:18px;height:18px;color:{{ $p.colors.primaryAction }};"></i>
         </div>
         <div class="panel-info">
-          <p class="panel-info-label">Address</p>
+          <p class="panel-info-label">{{ i18n "address" }}</p>
           <p class="panel-info-value panel-info-value-wrap">{{ $p.address }}</p>
         </div>
       </div>
@@ -65,7 +72,7 @@
           <i data-lucide="clock" style="width:18px;height:18px;color:{{ $p.colors.primaryAction }};"></i>
         </div>
         <div class="panel-info">
-          <p class="panel-info-label">Hours</p>
+          <p class="panel-info-label">{{ i18n "hours" }}</p>
           <p class="panel-info-value">{{ $p.hours }}</p>
         </div>
       </div>
@@ -79,26 +86,28 @@
 <main id="parts" style="background: {{ $p.colors.background }};">
   <div class="section-container parts-inner">
     <div class="section-header anim-fade-up">
-      <h2 class="section-title">Featured Parts</h2>
-      <p class="section-subtitle">Top-selling components in stock now</p>
+      <h2 class="section-title">{{ i18n "featured_parts" }}</h2>
+      <p class="section-subtitle">{{ i18n "parts_subtitle" }}</p>
     </div>
     <div id="parts-grid">
       {{ range $i, $part := .Site.Data.parts }}
       {{ $delay := add $i 1 }}
+      {{ $name := cond (and (eq $lang "pl") (ne $part.name_pl "")) $part.name_pl $part.name }}
+      {{ $desc := cond (and (eq $lang "pl") (ne $part.description_pl "")) $part.description_pl $part.description }}
       <div class="part-card anim-fade-up anim-delay-{{ $delay }}">
         <div class="part-card-top">
           <div class="part-icon-wrap">
             <i data-lucide="{{ $part.icon }}" style="width:28px;height:28px;color:{{ $p.colors.primaryAction }};"></i>
           </div>
-          <span class="part-badge">In Stock</span>
+          <span class="part-badge">{{ i18n "in_stock" }}</span>
         </div>
-        <h3 class="part-name">{{ $part.name }}</h3>
-        <p class="part-desc">{{ $part.description }}</p>
+        <h3 class="part-name">{{ $name }}</h3>
+        <p class="part-desc">{{ $desc }}</p>
         <div class="part-card-bottom">
           <span class="part-price">{{ $part.price }}</span>
-          <button class="part-btn" onclick="addToCart('{{ $part.name }}')">
+          <button class="part-btn" onclick="addToCart('{{ $name }}')">
             <i data-lucide="shopping-cart" style="width:14px;height:14px;"></i>
-            Add
+            {{ i18n "add_btn" }}
           </button>
         </div>
       </div>
@@ -111,36 +120,36 @@
 <section id="contact" style="background: {{ $p.colors.surface }};">
   <div class="section-container contact-inner">
     <div class="section-header">
-      <h2 class="section-title">Get In Touch</h2>
-      <p class="section-subtitle">We're here to help you find the right part</p>
+      <h2 class="section-title">{{ i18n "get_in_touch" }}</h2>
+      <p class="section-subtitle">{{ i18n "contact_subtitle" }}</p>
     </div>
     <div class="contact-grid">
       <div class="contact-card">
         <div class="contact-icon">
           <i data-lucide="phone" style="width:22px;height:22px;color:{{ $p.colors.primaryAction }};"></i>
         </div>
-        <p class="contact-label">Phone</p>
+        <p class="contact-label">{{ i18n "phone" }}</p>
         <p class="contact-value">{{ $p.phone }}</p>
       </div>
       <div class="contact-card">
         <div class="contact-icon">
           <i data-lucide="mail" style="width:22px;height:22px;color:{{ $p.colors.primaryAction }};"></i>
         </div>
-        <p class="contact-label">Email</p>
+        <p class="contact-label">{{ i18n "email" }}</p>
         <p class="contact-value">{{ $p.email }}</p>
       </div>
       <div class="contact-card">
         <div class="contact-icon">
           <i data-lucide="map-pin" style="width:22px;height:22px;color:{{ $p.colors.primaryAction }};"></i>
         </div>
-        <p class="contact-label">Address</p>
+        <p class="contact-label">{{ i18n "address" }}</p>
         <p class="contact-value">{{ $p.address }}</p>
       </div>
       <div class="contact-card">
         <div class="contact-icon">
           <i data-lucide="clock" style="width:22px;height:22px;color:{{ $p.colors.primaryAction }};"></i>
         </div>
-        <p class="contact-label">Hours</p>
+        <p class="contact-label">{{ i18n "hours" }}</p>
         <p class="contact-value">{{ $p.hours }}</p>
       </div>
     </div>
@@ -149,10 +158,11 @@
 
 <!-- Footer -->
 <footer>
-  <p class="footer-text">{{ $p.shopName }} · Built with care for car enthusiasts</p>
+  <p class="footer-text">{{ $p.shopName }} · {{ i18n "footer_built" }}</p>
 </footer>
 
 <script>
+  var addedToCart = {{ i18n "added_to_cart" | jsonify }};
   function addToCart(name) {
     const existing = document.getElementById('toast-msg');
     if (existing) existing.remove();
@@ -161,7 +171,7 @@
     toast.id = 'toast-msg';
     toast.className = 'toast';
     toast.style.background = '{{ $p.colors.primaryAction }}';
-    toast.innerHTML = `<i data-lucide="check" style="width:16px;height:16px;"></i> ${name} added to cart`;
+    toast.innerHTML = `<i data-lucide="check" style="width:16px;height:16px;"></i> ${name} ${addedToCart}`;
     document.body.appendChild(toast);
     lucide.createIcons();
     setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; }, 2000);

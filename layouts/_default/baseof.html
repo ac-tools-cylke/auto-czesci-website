@@ -114,6 +114,12 @@
       color: {{ .Site.Params.colors.text }};
     }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
     .nav-links {
       display: none;
       align-items: center;
@@ -131,6 +137,34 @@
       transition: color 0.15s ease;
     }
     .nav-links a:hover { color: {{ .Site.Params.colors.text }}; }
+
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .lang-btn {
+      padding: 0.25rem 0.625rem;
+      border-radius: 0.375rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: {{ .Site.Params.colors.secondaryText }};
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      letter-spacing: 0.05em;
+    }
+    .lang-btn:hover {
+      color: {{ .Site.Params.colors.text }};
+      border-color: rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.04);
+    }
+    .lang-btn.lang-active {
+      color: {{ .Site.Params.colors.primaryAction }};
+      border-color: {{ .Site.Params.colors.primaryAction }};
+      background: rgba(220,38,38,0.06);
+    }
 
     .quality-badge {
       display: inline-flex;

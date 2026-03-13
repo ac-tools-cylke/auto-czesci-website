@@ -1,27 +1,28 @@
 <!doctype html>
-<html lang="en" class="h-full">
+<html lang="en">
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auto Parts Shop</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&amp;family=DM+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    html, body { margin: 0; padding: 0; }
-    .font-heading { font-family: 'Outfit', sans-serif; }
-    .font-body { font-family: 'DM Sans', sans-serif; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'DM Sans', sans-serif;
+    }
 
+    /* Animations */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-    .anim-fade-up {
-      animation: fadeUp 0.6s ease-out forwards;
-      opacity: 0;
-    }
+    .anim-fade-up { animation: fadeUp 0.6s ease-out forwards; opacity: 0; }
     .anim-delay-1 { animation-delay: 0.1s; }
     .anim-delay-2 { animation-delay: 0.2s; }
     .anim-delay-3 { animation-delay: 0.3s; }
@@ -29,36 +30,30 @@
     .anim-delay-5 { animation-delay: 0.5s; }
     .anim-delay-6 { animation-delay: 0.6s; }
 
-    .part-card {
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    /* App wrapper */
+    #app-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
     }
-    .part-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+
+    /* ── Hero / Header ── */
+    .hero-section {
+      width: 100%;
+      position: relative;
     }
 
     .hero-pattern {
       background-image:
-        radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 20% 50%, rgba(220,38,38,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(220,38,38,0.05) 0%, transparent 40%),
         linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
     }
-    
     .hero-pattern.light-mode {
       background-image:
-        radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.04) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.02) 0%, transparent 40%),
+        radial-gradient(circle at 20% 50%, rgba(220,38,38,0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(220,38,38,0.02) 0%, transparent 40%),
         linear-gradient(135deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
-    }
-
-    .cta-btn {
-      transition: all 0.2s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
     }
 
     .grid-bg {
@@ -67,7 +62,6 @@
         linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
       background-size: 60px 60px;
     }
-
     .grid-bg.light-mode {
       background-image:
         linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
@@ -75,143 +69,581 @@
       background-size: 60px 60px;
     }
 
+    /* Shared container */
+    .section-container {
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .hero-inner {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+      position: relative;
+      z-index: 10;
+    }
+    @media (min-width: 768px) {
+      .hero-inner { padding-top: 6rem; padding-bottom: 6rem; }
+    }
+
+    /* Navigation */
+    .site-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-logo {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #dc2626;
+      flex-shrink: 0;
+    }
+
+    #nav-shop-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #1f2937;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #6b7280;
+    }
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+    }
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover { color: #111827; }
+
+    /* Quality badge */
+    .quality-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.375rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      background: rgba(220,38,38,0.15);
+      color: #dc2626;
+      border: 1px solid rgba(220,38,38,0.25);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Hero text */
+    #hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 2.25rem;
+      line-height: 1.15;
+      margin: 0 0 1rem 0;
+      color: #1f2937;
+    }
+    @media (min-width: 768px) {
+      #hero-title { font-size: 3.75rem; }
+    }
+
+    #hero-tagline {
+      font-size: 1.125rem;
+      margin: 0 0 2rem 0;
+      color: #6b7280;
+    }
+    @media (min-width: 768px) {
+      #hero-tagline { font-size: 1.25rem; }
+    }
+
+    /* CTA button */
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      border-radius: 9999px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+      background: #dc2626;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(220,38,38,0.4);
+    }
+
+    /* Decorative bottom fade */
+    .hero-bottom-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6rem;
+      background: linear-gradient(to top, #ffffff, transparent);
+      pointer-events: none;
+    }
+
+    /* Contact panel */
+    #contact-panel {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 40;
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.25rem;
+      border-radius: 1rem 0 0 1rem;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+      backdrop-filter: blur(12px);
+      background: rgba(249,250,251,0.95);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-right: none;
+      width: 280px;
+      max-height: 90%;
+    }
+    @media (min-width: 1024px) {
+      #contact-panel { display: flex; }
+    }
+
+    .panel-header {
+      text-align: center;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 1rem;
+    }
+    .panel-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin: 0 0 0.25rem 0;
+    }
+    #panel-shop-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: #1f2937;
+      margin: 0;
+    }
+
+    .panel-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .panel-item:hover { background: #f3f4f6; }
+    .panel-item-start { align-items: flex-start; }
+
+    .panel-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: rgba(220,38,38,0.1);
+    }
+    .panel-icon-top { margin-top: 0.125rem; }
+
+    .panel-info { flex: 1; min-width: 0; }
+    .panel-info-label {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin: 0 0 0.15rem 0;
+    }
+    .panel-info-value {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #1f2937;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .panel-info-value-wrap {
+      white-space: normal;
+      line-height: 1.3;
+    }
+
+    /* ── Parts section ── */
+    #parts { width: 100%; }
+
+    .parts-inner {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.875rem;
+      margin: 0 0 0.5rem 0;
+      color: #1f2937;
+    }
+    @media (min-width: 768px) {
+      .section-title { font-size: 2.25rem; }
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      color: #6b7280;
+      margin: 0;
+    }
+
+    /* Parts grid */
+    #parts-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      #parts-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      #parts-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Part card */
+    .part-card {
+      border-radius: 1rem;
+      padding: 1.5rem;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .part-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .part-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .part-icon-wrap {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(220,38,38,0.1);
+    }
+    .part-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+      background: rgba(220,38,38,0.10);
+      color: #dc2626;
+    }
+    .part-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.125rem;
+      margin: 0 0 0.25rem 0;
+      color: #1f2937;
+    }
+    .part-desc {
+      font-size: 0.875rem;
+      margin: 0 0 1rem 0;
+      color: #6b7280;
+    }
+    .part-card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .part-price {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #dc2626;
+    }
+    .part-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: #dc2626;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .part-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(220,38,38,0.4);
+    }
+
+    /* ── Contact section ── */
+    #contact { width: 100%; }
+
+    .contact-inner {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .contact-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .contact-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
     .contact-card {
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.06);
       backdrop-filter: blur(12px);
       transition: transform 0.2s ease;
     }
     .contact-card:hover { transform: translateY(-2px); }
+
+    .contact-icon {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.75rem;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(220,38,38,0.08);
+    }
+    .contact-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin: 0 0 0.25rem 0;
+      color: #6b7280;
+    }
+    .contact-value {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin: 0;
+      color: #1f2937;
+    }
+
+    /* ── Footer ── */
+    footer {
+      width: 100%;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      background: #f3f4f6;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+    .footer-text {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin: 0;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 9999px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      animation: fadeUp 0.3s ease-out;
+    }
   </style>
-  <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full font-body">
-  <div id="app-wrapper" class="w-full h-full overflow-auto" style="background: #ffffff;">
-   <header class="hero-pattern light-mode grid-bg light-mode w-full relative">
-    <div class="max-w-6xl mx-auto px-6 py-16 md:py-24 relative z-10">
-     <nav class="flex items-center justify-between mb-16 anim-fade-up">
-      <div class="flex items-center gap-3">
-       <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: #dc2626;">
+ <body>
+  <div id="app-wrapper" style="background: #ffffff;">
+   <header class="hero-section hero-pattern light-mode grid-bg light-mode">
+    <div class="section-container hero-inner">
+     <nav class="site-nav anim-fade-up">
+      <div class="nav-brand">
+       <div class="nav-logo">
         <i data-lucide="wrench" style="width:22px;height:22px;color:#fff;"></i>
-       </div><span id="nav-shop-name" class="font-heading font-bold text-xl" style="color: #1f2937;">GridLock Auto Parts</span>
+       </div>
+       <span id="nav-shop-name">GridLock Auto Parts</span>
       </div>
-      <div class="hidden md:flex items-center gap-8 text-sm font-medium" style="color: #6b7280;">
-       <a href="#parts" class="hover:text-gray-900 transition-colors">Parts</a> <a href="#contact" class="hover:text-gray-900 transition-colors">Contact</a>
+      <div class="nav-links">
+       <a href="#parts">Parts</a>
+       <a href="#contact">Contact</a>
       </div>
      </nav>
-     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium mb-6 anim-fade-up anim-delay-1" style="background: rgba(220,38,38,0.15); color: #dc2626; border: 1px solid rgba(220,38,38,0.25);">
+     <div class="quality-badge anim-fade-up anim-delay-1">
       <i data-lucide="zap" style="width:12px;height:12px;"></i> Premium Quality Parts
      </div>
-     <h1 id="hero-title" class="font-heading font-900 text-4xl md:text-6xl leading-tight mb-4 anim-fade-up anim-delay-2" style="color: #1f2937;">GridLock Auto Parts</h1>
-     <p id="hero-tagline" class="text-lg md:text-xl mb-8 anim-fade-up anim-delay-3" style="color: #6b7280;">Quality parts. Fair prices. Every make and model.</p><a href="#parts" class="cta-btn inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-heading font-semibold text-white anim-fade-up anim-delay-4" style="background: #dc2626;"> <i data-lucide="shopping-cart" style="width:18px;height:18px;"></i> Browse Parts </a>
+     <h1 id="hero-title" class="anim-fade-up anim-delay-2">GridLock Auto Parts</h1>
+     <p id="hero-tagline" class="anim-fade-up anim-delay-3">Quality parts. Fair prices. Every make and model.</p>
+     <a href="#parts" class="cta-btn anim-fade-up anim-delay-4">
+      <i data-lucide="shopping-cart" style="width:18px;height:18px;"></i> Browse Parts
+     </a>
     </div>
     <!-- Contact Panel embedded in hero -->
-    <div id="contact-panel" class="absolute right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4 p-5 rounded-2xl rounded-r-none shadow-2xl backdrop-blur-md" style="background: rgba(249,250,251,0.95); border: 1px solid rgba(0,0,0,0.08); border-right: none; width: 280px; max-height: 90%;">
-     <div class="text-center border-b border-gray-200 pb-4">
-      <p class="font-heading font-bold text-sm mb-1" style="color: #6b7280;">QUICK CONTACT</p>
-      <p class="font-heading font-bold text-lg" id="panel-shop-name" style="color: #1f2937;">GridLock Auto Parts</p>
+    <div id="contact-panel">
+     <div class="panel-header">
+      <p class="panel-label">QUICK CONTACT</p>
+      <p id="panel-shop-name">GridLock Auto Parts</p>
      </div>
-     <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer group">
-      <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.1);">
+     <div class="panel-item">
+      <div class="panel-icon">
        <i data-lucide="phone" style="width:18px;height:18px;color:#dc2626;"></i>
       </div>
-      <div class="flex-1 min-w-0">
-       <p class="text-xs" style="color: #6b7280;">Phone</p>
-       <p id="panel-phone" class="font-heading font-semibold text-sm truncate" style="color: #1f2937;">+1 (555) 123-4567</p>
+      <div class="panel-info">
+       <p class="panel-info-label">Phone</p>
+       <p id="panel-phone" class="panel-info-value">+1 (555) 123-4567</p>
       </div>
      </div>
-     <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer group">
-      <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.1);">
+     <div class="panel-item">
+      <div class="panel-icon">
        <i data-lucide="mail" style="width:18px;height:18px;color:#dc2626;"></i>
       </div>
-      <div class="flex-1 min-w-0">
-       <p class="text-xs" style="color: #6b7280;">Email</p>
-       <p id="panel-email" class="font-heading font-semibold text-sm truncate" style="color: #1f2937;">info@gridlockauto.com</p>
+      <div class="panel-info">
+       <p class="panel-info-label">Email</p>
+       <p id="panel-email" class="panel-info-value">info@gridlockauto.com</p>
       </div>
      </div>
-     <div class="flex items-start gap-3 p-4 rounded-xl hover:bg-gray-100 transition-colors">
-      <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: rgba(220,38,38,0.1);">
+     <div class="panel-item panel-item-start">
+      <div class="panel-icon panel-icon-top">
        <i data-lucide="map-pin" style="width:18px;height:18px;color:#dc2626;"></i>
       </div>
-      <div class="flex-1 min-w-0">
-       <p class="text-xs" style="color: #6b7280;">Address</p>
-       <p id="panel-address" class="font-heading font-semibold text-sm" style="color: #1f2937; line-height: 1.3;">742 Motor Ave, Detroit MI</p>
+      <div class="panel-info">
+       <p class="panel-info-label">Address</p>
+       <p id="panel-address" class="panel-info-value panel-info-value-wrap">742 Motor Ave, Detroit MI</p>
       </div>
      </div>
-     <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-100 transition-colors">
-      <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.1);">
+     <div class="panel-item">
+      <div class="panel-icon">
        <i data-lucide="clock" style="width:18px;height:18px;color:#dc2626;"></i>
       </div>
-      <div class="flex-1 min-w-0">
-       <p class="text-xs" style="color: #6b7280;">Hours</p>
-       <p id="panel-hours" class="font-heading font-semibold text-sm" style="color: #1f2937;">Mon–Sat 8AM–6PM</p>
+      <div class="panel-info">
+       <p class="panel-info-label">Hours</p>
+       <p id="panel-hours" class="panel-info-value">Mon–Sat 8AM–6PM</p>
       </div>
      </div>
     </div>
+    <!-- Decorative bottom fade -->
+    <div class="hero-bottom-fade"></div>
    </header>
-  </div><!-- Decorative bottom fade -->
-  <div class="absolute bottom-0 left-0 w-full h-24" style="background: linear-gradient(to top, #ffffff, transparent);"></div><!-- Parts Section -->
-  <main id="parts" class="w-full" style="background: #ffffff;">
-   <div class="max-w-6xl mx-auto px-6 py-16">
-    <div class="text-center mb-12 anim-fade-up">
-     <h2 class="font-heading font-800 text-3xl md:text-4xl mb-2" style="color: #1f2937;">Featured Parts</h2>
-     <p class="text-base" style="color: #6b7280;">Top-selling components in stock now</p>
+  </div>
+  <!-- Parts Section -->
+  <main id="parts" style="background: #ffffff;">
+   <div class="section-container parts-inner">
+    <div class="section-header anim-fade-up">
+     <h2 class="section-title">Featured Parts</h2>
+     <p class="section-subtitle">Top-selling components in stock now</p>
     </div>
-    <div id="parts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="parts-grid">
      <!-- Part cards rendered by JS -->
     </div>
    </div>
-  </main><!-- Contact Section -->
-  <section id="contact" class="w-full" style="background: #f9fafb;">
-   <div class="max-w-6xl mx-auto px-6 py-16">
-    <div class="text-center mb-12">
-     <h2 class="font-heading font-800 text-3xl md:text-4xl mb-2" style="color: #1f2937;">Get In Touch</h2>
-     <p class="text-base" style="color: #6b7280;">We're here to help you find the right part</p>
+  </main>
+  <!-- Contact Section -->
+  <section id="contact" style="background: #f9fafb;">
+   <div class="section-container contact-inner">
+    <div class="section-header">
+     <h2 class="section-title">Get In Touch</h2>
+     <p class="section-subtitle">We're here to help you find the right part</p>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-     <div class="contact-card rounded-2xl p-6 text-center" style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06);">
-      <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background: rgba(220,38,38,0.08);">
+    <div class="contact-grid">
+     <div class="contact-card">
+      <div class="contact-icon">
        <i data-lucide="phone" style="width:22px;height:22px;color:#dc2626;"></i>
       </div>
-      <p class="font-heading font-semibold text-sm mb-1" style="color: #6b7280;">Phone</p>
-      <p id="contact-phone" class="font-heading font-bold text-base" style="color: #1f2937;">+1 (555) 123-4567</p>
+      <p class="contact-label">Phone</p>
+      <p id="contact-phone" class="contact-value">+1 (555) 123-4567</p>
      </div>
-     <div class="contact-card rounded-2xl p-6 text-center" style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06);">
-      <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background: rgba(220,38,38,0.08);">
+     <div class="contact-card">
+      <div class="contact-icon">
        <i data-lucide="mail" style="width:22px;height:22px;color:#dc2626;"></i>
       </div>
-      <p class="font-heading font-semibold text-sm mb-1" style="color: #6b7280;">Email</p>
-      <p id="contact-email" class="font-heading font-bold text-base" style="color: #1f2937;">info@gridlockauto.com</p>
+      <p class="contact-label">Email</p>
+      <p id="contact-email" class="contact-value">info@gridlockauto.com</p>
      </div>
-     <div class="contact-card rounded-2xl p-6 text-center" style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06);">
-      <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background: rgba(220,38,38,0.08);">
+     <div class="contact-card">
+      <div class="contact-icon">
        <i data-lucide="map-pin" style="width:22px;height:22px;color:#dc2626;"></i>
       </div>
-      <p class="font-heading font-semibold text-sm mb-1" style="color: #6b7280;">Address</p>
-      <p id="contact-address" class="font-heading font-bold text-base" style="color: #1f2937;">742 Motor Ave, Detroit MI</p>
+      <p class="contact-label">Address</p>
+      <p id="contact-address" class="contact-value">742 Motor Ave, Detroit MI</p>
      </div>
-     <div class="contact-card rounded-2xl p-6 text-center" style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06);">
-      <div class="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center" style="background: rgba(220,38,38,0.08);">
+     <div class="contact-card">
+      <div class="contact-icon">
        <i data-lucide="clock" style="width:22px;height:22px;color:#dc2626;"></i>
       </div>
-      <p class="font-heading font-semibold text-sm mb-1" style="color: #6b7280;">Hours</p>
-      <p id="contact-hours" class="font-heading font-bold text-base" style="color: #1f2937;">Mon–Sat 8AM–6PM</p>
+      <p class="contact-label">Hours</p>
+      <p id="contact-hours" class="contact-value">Mon–Sat 8AM–6PM</p>
      </div>
     </div>
    </div>
-  </section><!-- Footer -->
-  <footer class="w-full py-8 text-center" style="background: #f3f4f6; border-top: 1px solid rgba(0,0,0,0.08);">
-   <p class="text-sm" style="color: #6b7280;"><span id="footer-name">GridLock Auto Parts</span> · Built with care for car enthusiasts</p>
+  </section>
+  <!-- Footer -->
+  <footer>
+   <p class="footer-text"><span id="footer-name">GridLock Auto Parts</span> · Built with care for car enthusiasts</p>
   </footer>
   <script>
-    // Part icons as inline SVGs for each card
-    const partIcons = [
-      'disc',       // brake pads
-      'droplets',   // oil filter
-      'zap',        // spark plugs
-      'wind',       // air filter
-      'sun',        // headlight
-      'cloud-rain'  // wiper
-    ];
+    const partIcons = ['disc', 'droplets', 'zap', 'wind', 'sun', 'cloud-rain'];
 
     const partDescriptions = [
       'Premium ceramic pads for reliable stopping power',
@@ -229,12 +661,12 @@
       contact_email: 'info@gridlockauto.com',
       contact_address: '742 Motor Ave, Detroit MI',
       contact_hours: 'Mon–Sat 8AM–6PM',
-      part1_name: 'Brake Pads', part1_price: '$49.99',
-      part2_name: 'Oil Filter', part2_price: '$12.99',
-      part3_name: 'Spark Plugs', part3_price: '$8.99',
-      part4_name: 'Air Filter', part4_price: '$22.99',
-      part5_name: 'Headlight Bulb', part5_price: '$15.99',
-      part6_name: 'Wiper Blades', part6_price: '$18.99',
+      part1_name: 'Brake Pads',    part1_price: '$49.99',
+      part2_name: 'Oil Filter',    part2_price: '$12.99',
+      part3_name: 'Spark Plugs',   part3_price: '$8.99',
+      part4_name: 'Air Filter',    part4_price: '$22.99',
+      part5_name: 'Headlight Bulb',part5_price: '$15.99',
+      part6_name: 'Wiper Blades',  part6_price: '$18.99',
       background_color: '#ffffff',
       surface_color: '#f9fafb',
       text_color: '#1f2937',
@@ -245,28 +677,25 @@
       theme_mode: 'light'
     };
 
-    // Build the parts grid once
     function buildPartsGrid() {
       const grid = document.getElementById('parts-grid');
       grid.innerHTML = '';
       for (let i = 1; i <= 6; i++) {
         const card = document.createElement('div');
-        card.className = 'part-card rounded-2xl p-6 anim-fade-up anim-delay-' + i;
+        card.className = 'part-card anim-fade-up anim-delay-' + i;
         card.id = 'part-card-' + i;
-        card.style.background = '#ffffff';
-        card.style.border = '1px solid rgba(0,0,0,0.06)';
         card.innerHTML = `
-          <div class="flex items-start justify-between mb-5">
-            <div class="w-14 h-14 rounded-xl flex items-center justify-center" id="part-icon-bg-${i}" style="background: rgba(220,38,38,0.1);">
+          <div class="part-card-top">
+            <div class="part-icon-wrap" id="part-icon-bg-${i}">
               <i data-lucide="${partIcons[i-1]}" style="width:28px;height:28px;color:#dc2626;" id="part-icon-${i}"></i>
             </div>
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold font-heading" id="part-badge-${i}" style="background: rgba(220,38,38,0.10); color: #dc2626;">In Stock</span>
+            <span class="part-badge" id="part-badge-${i}">In Stock</span>
           </div>
-          <h3 class="font-heading font-bold text-lg mb-1" id="part-name-${i}" style="color: #1f2937;"></h3>
-          <p class="text-sm mb-4" id="part-desc-${i}" style="color: #6b7280;">${partDescriptions[i-1]}</p>
-          <div class="flex items-center justify-between">
-            <span class="font-heading font-800 text-2xl" id="part-price-${i}" style="color: #dc2626;"></span>
-            <button class="cta-btn flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold text-white" id="part-btn-${i}" style="background: #dc2626;" onclick="addToCart(${i})">
+          <h3 class="part-name" id="part-name-${i}"></h3>
+          <p class="part-desc" id="part-desc-${i}">${partDescriptions[i-1]}</p>
+          <div class="part-card-bottom">
+            <span class="part-price" id="part-price-${i}"></span>
+            <button class="part-btn" id="part-btn-${i}" onclick="addToCart(${i})">
               <i data-lucide="shopping-cart" style="width:14px;height:14px;"></i>
               Add
             </button>
@@ -277,7 +706,6 @@
       lucide.createIcons();
     }
 
-    // Toast notification for add to cart
     function addToCart(partIndex) {
       const existing = document.getElementById('toast-msg');
       if (existing) existing.remove();
@@ -287,9 +715,8 @@
 
       const toast = document.createElement('div');
       toast.id = 'toast-msg';
-      toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-5 py-3 rounded-full font-heading font-semibold text-sm text-white shadow-xl';
+      toast.className = 'toast';
       toast.style.background = '#dc2626';
-      toast.style.animation = 'fadeUp 0.3s ease-out';
       toast.innerHTML = `<i data-lucide="check" style="width:16px;height:16px;"></i> ${name} added to cart`;
       document.body.appendChild(toast);
       lucide.createIcons();
@@ -300,7 +727,6 @@
     buildPartsGrid();
     applyConfig(defaultConfig);
 
-    // Apply config to UI
     function applyConfig(config) {
       const c = key => config[key] || defaultConfig[key];
       const font = c('font_family');
@@ -319,7 +745,7 @@
       document.getElementById('contact-email').textContent = c('contact_email');
       document.getElementById('contact-address').textContent = c('contact_address');
       document.getElementById('contact-hours').textContent = c('contact_hours');
-      
+
       // Panel contact
       document.getElementById('panel-phone').textContent = c('contact_phone');
       document.getElementById('panel-email').textContent = c('contact_email');
@@ -349,7 +775,7 @@
       document.getElementById('contact-email').style.color = text;
       document.getElementById('contact-address').style.color = text;
       document.getElementById('contact-hours').style.color = text;
-      
+
       // Panel colors
       document.getElementById('panel-shop-name').style.color = text;
       document.getElementById('panel-phone').style.color = text;
@@ -357,7 +783,7 @@
       document.getElementById('panel-address').style.color = text;
       document.getElementById('panel-hours').style.color = text;
 
-      // Part card text colors
+      // Part card colors
       for (let i = 1; i <= 6; i++) {
         const nameEl = document.getElementById('part-name-' + i);
         const priceEl = document.getElementById('part-price-' + i);
@@ -368,20 +794,24 @@
       }
 
       // Font
-      document.querySelectorAll('.font-heading, [class*="font-heading"]').forEach(el => {
-        el.style.fontFamily = baseFontStack;
-      });
+      const headingEls = document.querySelectorAll(
+        '#nav-shop-name, #hero-title, #hero-tagline, #panel-shop-name, .quality-badge, ' +
+        '.section-title, .part-name, .part-price, .part-badge, .part-btn, ' +
+        '.contact-label, .contact-value, .panel-label, .panel-info-value, ' +
+        '.cta-btn, .footer-text'
+      );
+      headingEls.forEach(el => { el.style.fontFamily = baseFontStack; });
       document.getElementById('hero-title').style.fontSize = `${baseSize * 3}px`;
       document.getElementById('hero-tagline').style.fontSize = `${baseSize * 1.2}px`;
-      
-      // Apply theme mode to hero and parts sections
+
+      // Theme
       const theme = c('theme_mode');
       const header = document.querySelector('header');
       const partsSection = document.getElementById('parts');
       const contactSection = document.getElementById('contact');
       const footerSection = document.querySelector('footer');
       const contactPanel = document.getElementById('contact-panel');
-      
+
       if (theme === 'light') {
         header.classList.add('light-mode');
         document.querySelector('.grid-bg').classList.add('light-mode');
@@ -440,28 +870,28 @@
         }
       }),
       mapToEditPanelValues: (config) => new Map([
-        ['shop_name', config.shop_name || defaultConfig.shop_name],
-        ['shop_tagline', config.shop_tagline || defaultConfig.shop_tagline],
-        ['contact_phone', config.contact_phone || defaultConfig.contact_phone],
-        ['contact_email', config.contact_email || defaultConfig.contact_email],
-        ['contact_address', config.contact_address || defaultConfig.contact_address],
-        ['contact_hours', config.contact_hours || defaultConfig.contact_hours],
-        ['part1_name', config.part1_name || defaultConfig.part1_name],
+        ['shop_name',        config.shop_name        || defaultConfig.shop_name],
+        ['shop_tagline',     config.shop_tagline     || defaultConfig.shop_tagline],
+        ['contact_phone',    config.contact_phone    || defaultConfig.contact_phone],
+        ['contact_email',    config.contact_email    || defaultConfig.contact_email],
+        ['contact_address',  config.contact_address  || defaultConfig.contact_address],
+        ['contact_hours',    config.contact_hours    || defaultConfig.contact_hours],
+        ['part1_name',  config.part1_name  || defaultConfig.part1_name],
         ['part1_price', config.part1_price || defaultConfig.part1_price],
-        ['part2_name', config.part2_name || defaultConfig.part2_name],
+        ['part2_name',  config.part2_name  || defaultConfig.part2_name],
         ['part2_price', config.part2_price || defaultConfig.part2_price],
-        ['part3_name', config.part3_name || defaultConfig.part3_name],
+        ['part3_name',  config.part3_name  || defaultConfig.part3_name],
         ['part3_price', config.part3_price || defaultConfig.part3_price],
-        ['part4_name', config.part4_name || defaultConfig.part4_name],
+        ['part4_name',  config.part4_name  || defaultConfig.part4_name],
         ['part4_price', config.part4_price || defaultConfig.part4_price],
-        ['part5_name', config.part5_name || defaultConfig.part5_name],
+        ['part5_name',  config.part5_name  || defaultConfig.part5_name],
         ['part5_price', config.part5_price || defaultConfig.part5_price],
-        ['part6_name', config.part6_name || defaultConfig.part6_name],
+        ['part6_name',  config.part6_name  || defaultConfig.part6_name],
         ['part6_price', config.part6_price || defaultConfig.part6_price]
       ])
     });
 
     lucide.createIcons();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dba399015443528',t:'MTc3MzM5NjM3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ </body>
 </html>

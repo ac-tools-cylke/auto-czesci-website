@@ -1,0 +1,23 @@
+baseURL = "https://example.com/"
+languageCode = "pl"
+title = "Auto Części"
+
+[params]
+  shopName    = "GridLock Auto Parts"
+  shopTagline = "Quality parts. Fair prices. Every make and model."
+  phone       = "+1 (555) 123-4567"
+  email       = "info@gridlockauto.com"
+  address     = "742 Motor Ave, Detroit MI"
+  hours       = "Mon–Sat 8AM–6PM"
+  themeMode   = "light"
+
+  [params.colors]
+    background     = "#ffffff"
+    surface        = "#f9fafb"
+    text           = "#1f2937"
+    primaryAction  = "#dc2626"
+    secondaryText  = "#6b7280"
+
+  [params.font]
+    family = "Outfit"
+    size   = 16

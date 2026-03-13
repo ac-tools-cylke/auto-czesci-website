@@ -1,0 +1,35 @@
+- id: 1
+  name: Brake Pads
+  price: "$49.99"
+  icon: disc
+  description: Premium ceramic pads for reliable stopping power
+
+- id: 2
+  name: Oil Filter
+  price: "$12.99"
+  icon: droplets
+  description: High-flow filtration for peak engine performance
+
+- id: 3
+  name: Spark Plugs
+  price: "$8.99"
+  icon: zap
+  description: Iridium-tipped for consistent ignition
+
+- id: 4
+  name: Air Filter
+  price: "$22.99"
+  icon: wind
+  description: Washable high-performance air filtration
+
+- id: 5
+  name: Headlight Bulb
+  price: "$15.99"
+  icon: sun
+  description: Bright halogen replacement for clear visibility
+
+- id: 6
+  name: Wiper Blades
+  price: "$18.99"
+  icon: cloud-rain
+  description: All-season silicone for streak-free wiping

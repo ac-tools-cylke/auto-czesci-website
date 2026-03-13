@@ -86,50 +86,7 @@
  </head>
  <body class="h-full font-body">
   <div id="app-wrapper" class="w-full h-full overflow-auto" style="background: #ffffff;">
-   <!-- Contact Overlay Panel -->
-   <div id="contact-panel" class="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4 p-5 rounded-2xl rounded-r-none shadow-2xl backdrop-blur-md" style="background: rgba(249,250,251,0.95); border: 1px solid rgba(0,0,0,0.08); border-right: none; width: 320px; max-height: 90vh; overflow-y-auto;">
-    <div class="text-center border-b border-gray-700 pb-4">
-     <p class="font-heading font-bold text-sm mb-1" style="color: #6b7280;">QUICK CONTACT</p>
-     <p class="font-heading font-bold text-lg" id="panel-shop-name" style="color: #1f2937;">GridLock Auto Parts</p>
-    </div>
-    <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-800 transition-colors cursor-pointer group">
-     <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.15);">
-      <i data-lucide="phone" style="width:18px;height:18px;color:#f87171;"></i>
-     </div>
-     <div class="flex-1 min-w-0">
-      <p class="text-xs" style="color: #6b7280;">Phone</p>
-      <p id="panel-phone" class="font-heading font-semibold text-sm truncate" style="color: #1f2937;">+1 (555) 123-4567</p>
-     </div><i data-lucide="copy" style="width:16px;height:16px;color:#737373;" class="flex-shrink-0 group-hover:text-white transition-colors"></i>
-    </div>
-    <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-800 transition-colors cursor-pointer group">
-     <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.15);">
-      <i data-lucide="mail" style="width:18px;height:18px;color:#f87171;"></i>
-     </div>
-     <div class="flex-1 min-w-0">
-      <p class="text-xs" style="color: #6b7280;">Email</p>
-      <p id="panel-email" class="font-heading font-semibold text-sm truncate" style="color: #1f2937;">info@gridlockauto.com</p>
-     </div><i data-lucide="copy" style="width:16px;height:16px;color:#737373;" class="flex-shrink-0 group-hover:text-white transition-colors"></i>
-    </div>
-    <div class="flex items-start gap-3 p-4 rounded-xl hover:bg-gray-800 transition-colors">
-     <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: rgba(220,38,38,0.15);">
-      <i data-lucide="map-pin" style="width:18px;height:18px;color:#f87171;"></i>
-     </div>
-     <div class="flex-1 min-w-0">
-      <p class="text-xs" style="color: #6b7280;">Address</p>
-      <p id="panel-address" class="font-heading font-semibold text-sm" style="color: #1f2937; line-height: 1.3;">742 Motor Ave, Detroit MI</p>
-     </div>
-    </div>
-    <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-800 transition-colors">
-     <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.15);">
-      <i data-lucide="clock" style="width:18px;height:18px;color:#f87171;"></i>
-     </div>
-     <div class="flex-1 min-w-0">
-      <p class="text-xs" style="color: #6b7280;">Hours</p>
-      <p id="panel-hours" class="font-heading font-semibold text-sm" style="color: #1f2937;">Mon–Sat 8AM–6PM</p>
-     </div>
-    </div><button class="w-full mt-2 px-4 py-2.5 rounded-lg font-heading font-semibold text-sm text-white transition-all hover:scale-105" style="background: #dc2626;"> <i data-lucide="message-circle" style="width:14px;height:14px;vertical-align:text-bottom;margin-right:6px;"></i> Message Us </button>
-   </div><!-- Hero Section -->
-   <header class="hero-pattern light-mode grid-bg light-mode w-full relative overflow-hidden">
+   <header class="hero-pattern light-mode grid-bg light-mode w-full relative">
     <div class="max-w-6xl mx-auto px-6 py-16 md:py-24 relative z-10">
      <nav class="flex items-center justify-between mb-16 anim-fade-up">
       <div class="flex items-center gap-3">
@@ -146,6 +103,49 @@
      </div>
      <h1 id="hero-title" class="font-heading font-900 text-4xl md:text-6xl leading-tight mb-4 anim-fade-up anim-delay-2" style="color: #1f2937;">GridLock Auto Parts</h1>
      <p id="hero-tagline" class="text-lg md:text-xl mb-8 anim-fade-up anim-delay-3" style="color: #6b7280;">Quality parts. Fair prices. Every make and model.</p><a href="#parts" class="cta-btn inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-heading font-semibold text-white anim-fade-up anim-delay-4" style="background: #dc2626;"> <i data-lucide="shopping-cart" style="width:18px;height:18px;"></i> Browse Parts </a>
+    </div>
+    <!-- Contact Panel embedded in hero -->
+    <div id="contact-panel" class="absolute right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4 p-5 rounded-2xl rounded-r-none shadow-2xl backdrop-blur-md" style="background: rgba(249,250,251,0.95); border: 1px solid rgba(0,0,0,0.08); border-right: none; width: 280px; max-height: 90%;">
+     <div class="text-center border-b border-gray-200 pb-4">
+      <p class="font-heading font-bold text-sm mb-1" style="color: #6b7280;">QUICK CONTACT</p>
+      <p class="font-heading font-bold text-lg" id="panel-shop-name" style="color: #1f2937;">GridLock Auto Parts</p>
+     </div>
+     <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer group">
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.1);">
+       <i data-lucide="phone" style="width:18px;height:18px;color:#dc2626;"></i>
+      </div>
+      <div class="flex-1 min-w-0">
+       <p class="text-xs" style="color: #6b7280;">Phone</p>
+       <p id="panel-phone" class="font-heading font-semibold text-sm truncate" style="color: #1f2937;">+1 (555) 123-4567</p>
+      </div>
+     </div>
+     <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer group">
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.1);">
+       <i data-lucide="mail" style="width:18px;height:18px;color:#dc2626;"></i>
+      </div>
+      <div class="flex-1 min-w-0">
+       <p class="text-xs" style="color: #6b7280;">Email</p>
+       <p id="panel-email" class="font-heading font-semibold text-sm truncate" style="color: #1f2937;">info@gridlockauto.com</p>
+      </div>
+     </div>
+     <div class="flex items-start gap-3 p-4 rounded-xl hover:bg-gray-100 transition-colors">
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: rgba(220,38,38,0.1);">
+       <i data-lucide="map-pin" style="width:18px;height:18px;color:#dc2626;"></i>
+      </div>
+      <div class="flex-1 min-w-0">
+       <p class="text-xs" style="color: #6b7280;">Address</p>
+       <p id="panel-address" class="font-heading font-semibold text-sm" style="color: #1f2937; line-height: 1.3;">742 Motor Ave, Detroit MI</p>
+      </div>
+     </div>
+     <div class="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-100 transition-colors">
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(220,38,38,0.1);">
+       <i data-lucide="clock" style="width:18px;height:18px;color:#dc2626;"></i>
+      </div>
+      <div class="flex-1 min-w-0">
+       <p class="text-xs" style="color: #6b7280;">Hours</p>
+       <p id="panel-hours" class="font-heading font-semibold text-sm" style="color: #1f2937;">Mon–Sat 8AM–6PM</p>
+      </div>
+     </div>
     </div>
    </header>
   </div><!-- Decorative bottom fade -->
@@ -298,6 +298,7 @@
     }
 
     buildPartsGrid();
+    applyConfig(defaultConfig);
 
     // Apply config to UI
     function applyConfig(config) {

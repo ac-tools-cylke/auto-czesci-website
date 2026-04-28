@@ -65,7 +65,7 @@
         </div>
         <div class="panel-info">
           <p class="panel-info-label">{{ i18n "address" }}</p>
-          <p class="panel-info-value panel-info-value-wrap">{{ $p.address }}</p>
+          <a class="panel-info-value panel-info-value-wrap" href="https://www.google.com/maps/search/?api=1&query={{ $p.address | urlquery }}" target="_blank" rel="noopener">{{ $p.address }}</a>
         </div>
       </div>
       <div class="panel-item">
@@ -75,6 +75,7 @@
         <div class="panel-info">
           <p class="panel-info-label">{{ i18n "hours" }}</p>
           <p class="panel-info-value">{{ $p.hours }}</p>
+          {{ if $p.hoursSat }}<p class="panel-info-value">{{ $p.hoursSat }}</p>{{ end }}
         </div>
       </div>
     </div>
@@ -145,7 +146,7 @@
           <i data-lucide="map-pin" style="width:22px;height:22px;color:{{ $p.colors.primaryAction }};"></i>
         </div>
         <p class="contact-label">{{ i18n "address" }}</p>
-        <p class="contact-value">{{ $p.address }}</p>
+        <a class="contact-value" href="https://www.google.com/maps/search/?api=1&query={{ $p.address | urlquery }}" target="_blank" rel="noopener">{{ $p.address }}</a>
       </div>
       <div class="contact-card">
         <div class="contact-icon">
@@ -153,6 +154,7 @@
         </div>
         <p class="contact-label">{{ i18n "hours" }}</p>
         <p class="contact-value">{{ $p.hours }}</p>
+        {{ if $p.hoursSat }}<p class="contact-value">{{ $p.hoursSat }}</p>{{ end }}
       </div>
     </div>
   </div>

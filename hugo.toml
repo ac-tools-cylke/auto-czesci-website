@@ -18,11 +18,13 @@ defaultContentLanguageInSubdir = false
       shopTagline = "Jakość części. Uczciwe ceny. Każda marka i model."
 
 [params]
-  shopName    = "GridLock Auto Parts"
-  phone       = "+1 (555) 123-4567"
-  email       = "info@gridlockauto.com"
-  address     = "742 Motor Ave, Detroit MI"
-  hours            = "Mon–Sat 8AM–6PM"
+  shopName    = "Auto Części Cylke"
+  phone       = "46 862 22 46"
+  email       = "biuro@auto-czesci-cylke.com"
+  website     = "http://auto-czesci-cylke.com"
+  address     = "96-500 Sochaczew, Wąska 7"
+  hours       = "pon.–pt. 08:00–18:00"
+  hoursSat    = "sob. 08:00–14:00"
   themeMode        = "light"
   showContactPanel = false
 

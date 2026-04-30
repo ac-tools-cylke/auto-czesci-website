@@ -2,36 +2,45 @@
 {{ $p := .Site.Params }}
 {{ $lang := .Site.Language.Lang }}
 <div id="app-wrapper" style="background: {{ $p.colors.background }};">
+  <!-- Top navigation bar (above hero) -->
+  <nav class="top-nav anim-fade-up">
+    <div class="nav-brand">
+      <div class="nav-logo">
+        <i data-lucide="wrench" style="width:22px;height:22px;color:#fff;"></i>
+      </div>
+      <span class="nav-shop-name">{{ $p.shopName }}</span>
+    </div>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#parts">{{ i18n "nav_parts" }}</a>
+        <a href="#contact">{{ i18n "nav_contact" }}</a>
+      </div>
+      <div class="lang-switcher">
+        <a href="/" class="lang-btn{{ if eq $lang "en" }} lang-active{{ end }}">EN</a>
+        <a href="/pl/" class="lang-btn{{ if eq $lang "pl" }} lang-active{{ end }}">PL</a>
+      </div>
+    </div>
+  </nav>
+
   <!-- Hero / Header -->
   <header class="hero-section hero-pattern{{ if eq $p.themeMode "light" }} light-mode{{ end }} grid-bg{{ if eq $p.themeMode "light" }} light-mode{{ end }}">
-    <div class="section-container hero-inner">
-      <nav class="site-nav anim-fade-up">
-        <div class="nav-brand">
-          <div class="nav-logo">
-            <i data-lucide="wrench" style="width:22px;height:22px;color:#fff;"></i>
-          </div>
-          <span class="nav-shop-name">{{ $p.shopName }}</span>
-        </div>
-        <div class="nav-right">
-          <div class="nav-links">
-            <a href="#parts">{{ i18n "nav_parts" }}</a>
-            <a href="#contact">{{ i18n "nav_contact" }}</a>
-          </div>
-          <div class="lang-switcher">
-            <a href="/" class="lang-btn{{ if eq $lang "en" }} lang-active{{ end }}">EN</a>
-            <a href="/pl/" class="lang-btn{{ if eq $lang "pl" }} lang-active{{ end }}">PL</a>
-          </div>
-        </div>
-      </nav>
+    <img src="/banner_nobg.png" alt="" class="hero-bg-img" aria-hidden="true">
+    <div class="hero-img-overlay"></div>
 
-      <div class="quality-badge anim-fade-up anim-delay-1">
-        <i data-lucide="zap" style="width:12px;height:12px;"></i> {{ i18n "quality_badge" }}
+    <div class="hero-inner">
+      <div class="hero-body">
+        <div class="hero-body-spacer"></div>
+        <div class="hero-body-text">
+          <div class="quality-badge anim-fade-up anim-delay-1">
+            <i data-lucide="zap" style="width:12px;height:12px;"></i> {{ i18n "quality_badge" }}
+          </div>
+          <h1 class="hero-title anim-fade-up anim-delay-2">{{ $p.shopName }}</h1>
+          <p class="hero-tagline anim-fade-up anim-delay-3">{{ $p.shopTagline }}</p>
+          <a href="#parts" class="cta-btn anim-fade-up anim-delay-4">
+            <i data-lucide="shopping-cart" style="width:18px;height:18px;"></i> {{ i18n "browse_parts" }}
+          </a>
+        </div>
       </div>
-      <h1 class="hero-title anim-fade-up anim-delay-2">{{ $p.shopName }}</h1>
-      <p class="hero-tagline anim-fade-up anim-delay-3">{{ $p.shopTagline }}</p>
-      <a href="#parts" class="cta-btn anim-fade-up anim-delay-4">
-        <i data-lucide="shopping-cart" style="width:18px;height:18px;"></i> {{ i18n "browse_parts" }}
-      </a>
     </div>
 
     <!-- Quick Contact Panel -->

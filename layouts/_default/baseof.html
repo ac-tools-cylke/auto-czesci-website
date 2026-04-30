@@ -37,7 +37,48 @@
     .hero-section {
       width: 100%;
       position: relative;
+      overflow: hidden;
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
     }
+
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: left center;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to left,
+        rgba(5, 5, 20, 0.95) 0%,
+        rgba(5, 5, 20, 0.82) 28%,
+        rgba(5, 5, 20, 0.30) 62%,
+        transparent 100%
+      );
+      z-index: 1;
+    }
+
+    /* Top nav always white — it sits on the dark bar */
+    .top-nav .nav-shop-name,
+    .top-nav .nav-links,
+    .top-nav .nav-links a { color: #ffffff; }
+    .top-nav .nav-links a:hover { color: rgba(255,255,255,0.7); }
+    .top-nav .lang-btn { color: rgba(255,255,255,0.75); border-color: rgba(255,255,255,0.25); }
+    .top-nav .lang-btn:hover { color: #fff; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
+    .top-nav .lang-btn.lang-active { color: #fff; border-color: #dc2626; background: rgba(220,38,38,0.3); }
+
+    /* Hero text always white */
+    .hero-section .hero-title,
+    .hero-section .hero-tagline { color: #ffffff; }
 
     .hero-pattern {
       background-image:
@@ -73,21 +114,65 @@
       padding-right: 1.5rem;
     }
 
-    .hero-inner {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-      position: relative;
-      z-index: 10;
-    }
-    @media (min-width: 768px) {
-      .hero-inner { padding-top: 6rem; padding-bottom: 6rem; }
-    }
-
-    .site-nav {
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 4rem;
+      padding: 0.875rem 2.5rem;
+      background: rgba(8, 8, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 2rem 2.5rem;
+      /* leave room for contact panel on desktop */
+      padding-right: 2.5rem;
+    }
+    @media (min-width: 1024px) {
+      .hero-body { padding-right: calc(280px + 3rem); }
+    }
+
+    .hero-body-spacer {
+      flex: 1;
+    }
+
+    .hero-body-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      padding: 1.75rem 2rem;
+      border-radius: 1rem;
+      background: rgba(5, 5, 20, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    @media (max-width: 640px) {
+      .hero-inner > .section-container { padding: 0 1.5rem; }
+      .hero-body { padding: 2rem 1.5rem; }
+      .hero-body-spacer { display: none; }
+      .hero-body-text {
+        width: 100%;
+        align-items: flex-start;
+        text-align: left;
+      }
     }
 
     .nav-brand {
@@ -174,7 +259,8 @@
       border-radius: 9999px;
       font-size: 0.75rem;
       font-weight: 500;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
+      white-space: nowrap;
       background: rgba(220,38,38,0.15);
       color: {{ .Site.Params.colors.primaryAction }};
       border: 1px solid rgba(220,38,38,0.25);
@@ -184,32 +270,32 @@
     .hero-title {
       font-family: 'Outfit', sans-serif;
       font-weight: 900;
-      font-size: 2.25rem;
+      font-size: 2rem;
       line-height: 1.15;
-      margin: 0 0 1rem 0;
+      margin: 0 0 0.75rem 0;
+      white-space: nowrap;
       color: {{ .Site.Params.colors.text }};
     }
     @media (min-width: 768px) {
-      .hero-title { font-size: 3.75rem; }
+      .hero-title { font-size: 2.75rem; }
     }
 
     .hero-tagline {
-      font-size: 1.125rem;
-      margin: 0 0 2rem 0;
+      font-size: 0.95rem;
+      margin: 0 0 1.5rem 0;
+      white-space: nowrap;
       color: {{ .Site.Params.colors.secondaryText }};
-    }
-    @media (min-width: 768px) {
-      .hero-tagline { font-size: 1.25rem; }
     }
 
     .cta-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.875rem 2rem;
+      padding: 0.75rem 1.75rem;
       border-radius: 9999px;
       font-family: 'Outfit', sans-serif;
       font-weight: 600;
+      white-space: nowrap;
       color: #ffffff;
       text-decoration: none;
       background: {{ .Site.Params.colors.primaryAction }};
